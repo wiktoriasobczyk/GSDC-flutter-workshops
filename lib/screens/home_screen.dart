@@ -10,11 +10,11 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  final List<String> _attentioners = [];
 
-  void _incrementCounter() {
+  void _addItem() {
     setState(() {
-      _counter++;
+      _attentioners.add('test');
     });
   }
 
@@ -24,23 +24,17 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
+      body: ListView.builder(
+        itemCount: _attentioners.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: Text(_attentioners[index]),
+          );
+        },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
+        onPressed: _addItem,
+        tooltip: 'Add item',
         child: const Icon(Icons.add),
       ),
     );
