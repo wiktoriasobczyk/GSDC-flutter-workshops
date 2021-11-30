@@ -52,7 +52,7 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: ListView.builder(
+      body: ReorderableListView.builder(
         itemCount: _attentioners.length,
         itemBuilder: (context, index) {
           final String attetionerName = _attentioners[index];
@@ -69,6 +69,15 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
               onDismissed: (DismissDirection directon) => _removeUser(index));
+        },
+        onReorder: (int oldIndex, int newIndex) {
+          setState(() {
+            if (oldIndex < newIndex) {
+              newIndex -= 1;
+            }
+            final String reorderedItem = _attentioners.removeAt(oldIndex);
+            _attentioners.insert(newIndex, reorderedItem);
+          });
         },
       ),
       floatingActionButton: FloatingActionButton(
