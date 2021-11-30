@@ -27,8 +27,10 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
   }
 
+  int _getRandomValue(int maxSize) => Random().nextInt(maxSize);
+
   String _getRandomAttentioner() {
-    int generatedIndex = Random().nextInt(_potentialAttentioners.length);
+    int generatedIndex = _getRandomValue(_potentialAttentioners.length);
     return _potentialAttentioners[generatedIndex];
   }
 
@@ -53,22 +55,20 @@ class _MyHomePageState extends State<MyHomePage> {
       body: ListView.builder(
         itemCount: _attentioners.length,
         itemBuilder: (context, index) {
-          return Card(
-            child: ListTile(
-              leading: const Icon(
-                Icons.person,
-                color: Colors.grey,
-                size: 24.0,
+          final String attetionerName = _attentioners[index];
+          return Dismissible(
+              key: Key('$attetionerName ${_getRandomValue(1000000)}'),
+              child: Card(
+                child: ListTile(
+                  leading: const Icon(
+                    Icons.person,
+                    color: Colors.grey,
+                    size: 24.0,
+                  ),
+                  title: Text(_attentioners[index]),
+                ),
               ),
-              trailing: const Icon(
-                Icons.close,
-                color: Colors.grey,
-                size: 24.0,
-              ),
-              title: Text(_attentioners[index]),
-              onTap: () => _removeUser(index),
-            ),
-          );
+              onDismissed: (DismissDirection directon) => _removeUser(index));
         },
       ),
       floatingActionButton: FloatingActionButton(
