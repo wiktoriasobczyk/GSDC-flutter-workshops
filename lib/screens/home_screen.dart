@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -10,11 +12,23 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final List<String> _attentioners = [];
+  final List<String> _attentioners = [
+    'Wiktoria',
+    'Sebastian',
+    'Łukasz',
+    'Monika',
+    'Michał',
+    'Kaja'
+  ];
+
+  String _getRandomAttenioner() {
+    int generatedIndex = Random().nextInt(_attentioners.length);
+    return _attentioners[generatedIndex];
+  }
 
   void _addItem() {
     setState(() {
-      _attentioners.add('test');
+      _attentioners.add(_getRandomAttenioner());
     });
   }
 
