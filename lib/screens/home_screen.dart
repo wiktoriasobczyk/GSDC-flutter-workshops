@@ -20,15 +20,27 @@ class _MyHomePageState extends State<MyHomePage> {
     'Michał',
     'Kaja'
   ];
-
-  String _getRandomAttenioner() {
-    int generatedIndex = Random().nextInt(_attentioners.length);
-    return _attentioners[generatedIndex];
+  late List<String> _potentialAttentioners;
+  @override
+  void initState() {
+    _potentialAttentioners = [..._attentioners];
+    super.initState();
   }
 
-  void _addItem() {
+  String _getRandomAttentioner() {
+    int generatedIndex = Random().nextInt(_potentialAttentioners.length);
+    return _potentialAttentioners[generatedIndex];
+  }
+
+  void _addUser() {
     setState(() {
-      _attentioners.add(_getRandomAttenioner());
+      _attentioners.add(_getRandomAttentioner());
+    });
+  }
+
+  void _removeUser(int index) {
+    setState(() {
+      _attentioners.removeAt(index);
     });
   }
 
@@ -41,14 +53,27 @@ class _MyHomePageState extends State<MyHomePage> {
       body: ListView.builder(
         itemCount: _attentioners.length,
         itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(_attentioners[index]),
+          return Card(
+            child: ListTile(
+              leading: const Icon(
+                Icons.person,
+                color: Colors.grey,
+                size: 24.0,
+              ),
+              trailing: const Icon(
+                Icons.close,
+                color: Colors.grey,
+                size: 24.0,
+              ),
+              title: Text(_attentioners[index]),
+              onTap: () => _removeUser(index),
+            ),
           );
         },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _addItem,
-        tooltip: 'Add item',
+        onPressed: _addUser,
+        tooltip: 'Add user',
         child: const Icon(Icons.add),
       ),
     );
